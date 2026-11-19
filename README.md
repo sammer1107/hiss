@@ -1,4 +1,4 @@
-# HISS: Headless Interactive Session Server
+# hiss: Headless Interactive Session Server
 
 Persistent Python REPL sessions, driven one shell command at a time, each identified by a name. Built for agents (Claude Code) that can't sit at a `>>>` prompt but want one: explore an unfamiliar API with a live client object, keep loaded data in memory, avoid re-running calls that have side effects.
 

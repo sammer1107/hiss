@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# HISS launcher template; install.sh fills in @ROOT@ and copies it to ~/bin/hiss.
+# hiss launcher template; install.sh fills in @ROOT@ and copies it to ~/bin/hiss.
 # Works in Git Bash on Windows and on Linux/macOS.
 script="@ROOT@/run.py"
 python=python3
