@@ -12,7 +12,7 @@ import time
 
 from .cleanup import prune
 from .client import NoSession, Unresponsive, read_state, request
-from .paths import HOME, NAME_RE, RUN_PY, SessionPaths, all_sessions
+from .paths import HANDLE_RE, HOME, NAME_RE, RUN_PY, SessionPaths, all_sessions
 
 DEFAULT_TIMEOUT = 60      # seconds `run` / `wait` block before answering "still running"
 DEFAULT_MAX = 20000       # characters of output shown before the middle is cut
@@ -30,7 +30,8 @@ hiss: Headless Interactive Session Server. Persistent Python REPL sessions, one 
 
   hiss start NAME [--python PATH] [--idle MIN]   start a session in the current directory;
                                                  prints its handle, NAME-xxxx, used by the rest
-  hiss run NAME [--timeout S] [--max N] <<'EOF'  run a snippet (or -c CODE) and print its output
+  hiss run NAME [--timeout S] [--max N] <<'EOF'  run a snippet (or -c CODE) and print its output;
+                                                 `hiss NAME ...` is short for `hiss run NAME ...`
   hiss wait NAME [--timeout S] [--max N]         more output from a snippet still running
   hiss interrupt NAME                            Ctrl+C the running snippet; the session survives
   hiss stop NAME                                 end the session
@@ -52,7 +53,10 @@ def main() -> None:
         from .server import serve
         serve(sys.argv[2], float(sys.argv[3]))
         return
-    args = _parser().parse_args()
+    argv = sys.argv[1:]
+    if argv and HANDLE_RE.match(argv[0]):  # `hiss HANDLE ...` is short for `hiss run HANDLE ...`
+        argv.insert(0, "run")
+    args = _parser().parse_args(argv)
     try:
         code = args.command(args)
     except Fail as e:

@@ -124,6 +124,11 @@ class HissTest(unittest.TestCase):
         finally:
             self.hiss("stop", other)
 
+    def test_handle_alone_means_run(self):
+        self.assertEqual(self.hiss(self.name, code="6 * 7")[:2], (0, "42\n"))
+        self.assertEqual(self.hiss(self.name, "-c", "6 * 7")[:2], (0, "42\n"))
+        self.assertIn("invalid choice", self.hiss("stpo", self.name)[2])
+
     def test_missing_session_is_an_error(self):
         self.assertEqual(self.hiss("run", "nope", "-c", "1")[0], 3)
 

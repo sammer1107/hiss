@@ -9,6 +9,8 @@ TOOL_ROOT = Path(__file__).resolve().parent.parent
 RUN_PY = TOOL_ROOT / "run.py"
 HOME = Path(os.environ.get("HISS_HOME") or TOOL_ROOT / "sessions")
 NAME_RE = re.compile(r"^[A-Za-z0-9_.-]{1,64}$")
+# What `start` hands out: NAME-xxxx. No command name looks like this.
+HANDLE_RE = re.compile(r"^[A-Za-z0-9_.-]+-[a-z0-9]{4}$")
 
 
 class SessionPaths:

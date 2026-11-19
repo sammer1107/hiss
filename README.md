@@ -16,13 +16,13 @@ python ~/.claude/tools/hiss/tests/test_hiss.py
 
 ```bash
 hiss start api                       # prints its handle: "started session api-k3f9"
-hiss run api-k3f9 <<'EOF'
+hiss api-k3f9 <<'EOF'                # short for `hiss run api-k3f9`
 import requests
 s = requests.Session()
 r = s.get("https://example.com")
 r.status_code
 EOF
-hiss run api-k3f9 -c 'r.headers["content-type"]'
+hiss api-k3f9 -c 'r.headers["content-type"]'
 hiss wait api-k3f9                   # more output from a snippet still running
 hiss interrupt api-k3f9              # Ctrl+C; variables survive
 hiss stop api-k3f9
